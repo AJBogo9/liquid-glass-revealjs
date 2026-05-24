@@ -22,6 +22,12 @@ format:
             { label: 'Waterfall', url: "url('https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1920&q=80')" },
           ];
 
+          // Preload all picker images so they're cached before the user clicks.
+          backgrounds.forEach(function (bg) {
+            var m = bg.url.match(/url\(['"]?([^'"()]+)['"]?\)/);
+            if (m) { new Image().src = m[1]; }
+          });
+
           var titleSlide = document.getElementById('title-slide');
           if (!titleSlide) return;
 
