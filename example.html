@@ -97,7 +97,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="example_files/libs/revealjs/dist/theme/quarto-2f3877f571dbb1dea0513101ce9825e6.css">
+  <link rel="stylesheet" href="example_files/libs/revealjs/dist/theme/quarto-bc1a949a5184a7ac4f14d5385d9f7d24.css">
   <link href="example_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="example_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="example_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -637,6 +637,12 @@
         { label: 'Forest',    url: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80')" },
         { label: 'Waterfall', url: "url('https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1920&q=80')" },
       ];
+
+      // Preload all picker images so they're cached before the user clicks.
+      backgrounds.forEach(function (bg) {
+        var m = bg.url.match(/url\(['"]?([^'"()]+)['"]?\)/);
+        if (m) { new Image().src = m[1]; }
+      });
 
       var titleSlide = document.getElementById('title-slide');
       if (!titleSlide) return;
