@@ -9,5 +9,7 @@ contributes:
       theme: [dark, liquid-glass.css]
       format-resources:
         - liquid-glass.js
+      include-in-header:
+        - file: liquid-glass-head.html
       include-after-body:
         - file: liquid-glass-init.html

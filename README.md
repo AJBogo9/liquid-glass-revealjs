@@ -54,8 +54,8 @@ Full list in [`_extensions/liquid-glass/liquid-glass.css`](_extensions/liquid-gl
 
 ## How it works
 
-1. The `reveal-viewport` gets the background image via CSS.
-2. The JS plugin injects a fixed-position `lg-blurred-bg` div behind the presentation. This div carries its own copy of the image with `filter: blur() brightness()` applied.
+1. The JS plugin injects a `.lg-bg` div into the viewport. It preloads the image from `--lg-bg-image` and fades the div in once loaded, eliminating any flash on page load.
+2. The JS plugin also injects a `.lg-blurred-bg` div carrying its own copy of the image with `filter: blur() brightness()` applied.
 3. On content slides, `.lg-blur-active` is toggled on the viewport, fading the blurred layer in with a CSS transition. It fades back out on the title slide.
 4. The JS plugin wraps each content slide's children in a `.glass-panel` div.
 5. `.glass-panel` applies `backdrop-filter: brightness()` to darken the blurred image behind it, ensuring text contrast.

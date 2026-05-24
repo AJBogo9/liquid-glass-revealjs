@@ -52,9 +52,7 @@
   --lg-strong-color: rgba(160, 215, 255, 1.00);
   --lg-em-color: rgba(205, 225, 255, 0.88);
 
-  /* --- Chrome (footer, slide number) ----------------------- */
-  --lg-chrome-bg: rgba(4, 5, 28, 0.55);
-  --lg-chrome-border: rgba(255, 255, 255, 0.08);
+  /* --- Chrome (slide number, footer links) ----------------- */
   --lg-chrome-text: rgba(155, 200, 255, 0.80);
 }
 
@@ -66,16 +64,25 @@
 
 /* ---- GLOBAL BACKGROUND ------------------------------------ */
 .reveal-viewport {
-  /* Dark fallback prevents white flash while the image loads.
-     Split into individual properties so background-color is not reset. */
+  /* Dark base — visible instantly before any image loads */
   background-color: #06080a !important;
-  background-image: var(--lg-bg-image) !important;
-  background-position: center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
   /* Establish stacking context so z-index children work predictably */
   position: relative !important;
+}
+
+/* Sharp background image layer — injected by JS, fades in once loaded */
+.lg-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--lg-bg-image) center / cover no-repeat;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lg-bg.lg-bg-loaded {
+  opacity: 1;
 }
 
 .slide-background,
@@ -335,49 +342,6 @@
 #title-slide .glass-panel {
   text-align: center;
   width: 60%;
-}
-
-/* ---- BACKGROUND PICKER (title slide) ---------------------- */
-.lg-bg-picker {
-  display: flex;
-  gap: 0.45em;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2.2em;
-}
-
-.lg-bg-btn {
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: 20px;
-  padding: 0.22em 1em;
-  color: rgba(255, 255, 255, 0.70);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 0.55em;
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.lg-bg-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.45);
-  color: rgba(255, 255, 255, 0.90);
-}
-
-.lg-bg-btn.active {
-  background: rgba(255, 255, 255, 0.28);
-  border-color: rgba(255, 255, 255, 0.60);
-  color: #fff;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.45);
-}
-
-/* Hide Observable's default wrapper chrome */
-#title-slide .observablehq {
-  margin: 0 !important;
-  padding: 0 !important;
 }
 
 /* ---- PROGRESS BAR ----------------------------------------- */
