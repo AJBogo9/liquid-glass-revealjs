@@ -1,0 +1,9 @@
+_site/
+/*.html
+.quarto/
+/.quarto/
+**/*.quarto_ipynb
+
+# Quarto render outputs
+*_files/
+/liquid-glass.js
