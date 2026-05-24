@@ -97,7 +97,7 @@
     code span.vs { color: #abe338; } /* VerbatimString */
     code span.wa { color: #dcc6e0; } /* Warning */
   </style>
-  <link rel="stylesheet" href="example_files/libs/revealjs/dist/theme/quarto-bc1a949a5184a7ac4f14d5385d9f7d24.css">
+  <link rel="stylesheet" href="example_files/libs/revealjs/dist/theme/quarto-3535a381d53ce12fbec45421693799df.css">
   <link href="example_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="example_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="example_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -189,9 +189,10 @@
       margin-right: 0; 
     }
   </style>
+  <style>html,body{background:#06080a!important}</style>
   <style>
     :root {
-      --lg-bg-image: url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1920&q=80');
+      --lg-bg-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
     }
   </style>
 </head>
@@ -219,9 +220,9 @@
 <section id="how-it-works" class="slide level2">
 <h2>How It Works</h2>
 <ul>
-<li>A fixed-position <code>lg-blurred-bg</code> layer fades in on content slides, out on the title slide</li>
+<li>JS injects a <code>.lg-bg</code> div, preloads the image, and fades it in — no flash on load</li>
+<li>A <code>.lg-blurred-bg</code> layer fades in on content slides and out on the title slide</li>
 <li>The JS plugin wraps each slide’s children in a <code>.glass-panel</code> div</li>
-<li><code>.glass-panel</code> uses <code>backdrop-filter: brightness()</code> to darken the blurred image behind it</li>
 <li><code>::before</code> adds the glass rim; <code>::after</code> adds the tint and sheen gradient</li>
 </ul>
 </section>
@@ -628,51 +629,6 @@
     <script src="liquid-glass.js"></script>
     <script>
       Reveal.registerPlugin(LiquidGlass());
-    </script>
-    <script>
-    function initBgPicker() {
-      var backgrounds = [
-        { label: 'Aurora',    url: "url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1920&q=80')" },
-        { label: 'Mountains', url: "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80')" },
-        { label: 'Forest',    url: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80')" },
-        { label: 'Waterfall', url: "url('https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1920&q=80')" },
-      ];
-
-      // Preload all picker images so they're cached before the user clicks.
-      backgrounds.forEach(function (bg) {
-        var m = bg.url.match(/url\(['"]?([^'"()]+)['"]?\)/);
-        if (m) { new Image().src = m[1]; }
-      });
-
-      var titleSlide = document.getElementById('title-slide');
-      if (!titleSlide) return;
-
-      var picker = document.createElement('div');
-      picker.className = 'lg-bg-picker';
-
-      backgrounds.forEach(function (bg, i) {
-        var btn = document.createElement('button');
-        btn.className = 'lg-bg-btn' + (i === 0 ? ' active' : '');
-        btn.textContent = bg.label;
-        btn.addEventListener('click', function () {
-          picker.querySelectorAll('.lg-bg-btn').forEach(function (b) {
-            b.classList.remove('active');
-          });
-          btn.classList.add('active');
-          document.documentElement.style.setProperty('--lg-bg-image', bg.url);
-        });
-        picker.appendChild(btn);
-      });
-
-      var panel = titleSlide.querySelector('.glass-panel') || titleSlide;
-      panel.appendChild(picker);
-    }
-
-    if (typeof Reveal !== 'undefined') {
-      Reveal.on('ready', initBgPicker);
-    } else {
-      document.addEventListener('DOMContentLoaded', initBgPicker);
-    }
     </script>
     
 

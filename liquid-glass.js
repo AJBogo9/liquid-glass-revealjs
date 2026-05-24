@@ -12,10 +12,28 @@ var LiquidGlass = function () {
     init: function (deck) {
       var viewport = document.querySelector('.reveal-viewport');
 
-      // Inject the blurred background layer once
+      // Inject background layers in bottom-up order:
+      //   1. lg-blurred-bg (inserted first, sits at bottom of stack)
+      //   2. lg-bg         (inserted second via insertBefore, sits above lg-blurred-bg)
+      // .reveal (z-index 1) always sits above both.
+
       var blurBg = document.createElement('div');
       blurBg.className = 'lg-blurred-bg';
       viewport.insertBefore(blurBg, viewport.firstChild);
+
+      // Inject the sharp background layer above the blurred one, fade in once loaded
+      var bgEl = document.createElement('div');
+      bgEl.className = 'lg-bg';
+      viewport.insertBefore(bgEl, viewport.firstChild);
+
+      var bgVal = getComputedStyle(document.documentElement)
+        .getPropertyValue('--lg-bg-image').trim();
+      var bgMatch = bgVal.match(/url\(['"]?([^'"()]+)['"]?\)/);
+      if (bgMatch) {
+        var img = new Image();
+        img.onload = function () { bgEl.classList.add('lg-bg-loaded'); };
+        img.src = bgMatch[1];
+      }
 
       function isTitle(section) {
         return !section ||
