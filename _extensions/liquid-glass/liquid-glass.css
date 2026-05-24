@@ -13,7 +13,7 @@
 
 :root {
   /* --- Background image ------------------------------------ */
-  --lg-bg-image: url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1920&q=80');
+  --lg-bg-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
 
   /* --- Glass panel ----------------------------------------- */
   --lg-panel-width: 72%;
@@ -342,6 +342,15 @@
 #title-slide .glass-panel {
   text-align: center;
   width: 60%;
+}
+
+/* ---- FIREFOX FALLBACK ------------------------------------- */
+/* backdrop-filter is disabled by default in Firefox. Provide a
+   semi-transparent background so text stays readable. */
+@supports not (backdrop-filter: brightness(1)) {
+  .glass-panel {
+    background: rgba(0, 5, 20, 0.65);
+  }
 }
 
 /* ---- PROGRESS BAR ----------------------------------------- */

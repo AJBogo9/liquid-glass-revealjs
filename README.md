@@ -64,7 +64,16 @@ Full list in [`_extensions/liquid-glass/liquid-glass.css`](_extensions/liquid-gl
 ## Requirements
 
 - Quarto >= 1.3.0
-- A Chromium-based browser for `backdrop-filter` support (Firefox requires `layout.css.backdrop-filter.enabled`)
+- A Chromium-based browser is recommended. Firefox disables `backdrop-filter` by default, so the glass panel's brightness effect won't apply. A semi-transparent dark fallback is used automatically in that case to keep text readable.
+
+## Notes
+
+**Overriding the dark page fallback:** The extension injects `html, body { background: #06080a }` into `<head>` to prevent a white flash before the image loads. If your background image is very bright, you can override this with your own `include-in-header` block:
+
+```yaml
+include-in-header:
+  text: "<style>html,body{background:#e8e0d0}</style>"
+```
 
 ## License
 
